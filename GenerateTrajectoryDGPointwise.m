@@ -2,14 +2,26 @@
 % [t_start, t_end)
 % Outputs: t - t measured at a pointwise scale.
 %          GU - Power generation for a single DG at each t.
-% Version history: 20170112, Created by ZZ
+% Version history: 
+% 20170125, Edited by ZZ
+% Changes: Modify the way of generating the trajectory, in order to enhance
+% the computation efficiency.
+% 20170112, Created by ZZ
 function [t,GU] = GenerateTrajectoryDGPointwise(t_start,t_end,state,p)
 t = t_start:t_end; % Pointwised time
 GU = zeros(size(t));
 n_t = length(t);
 cum_p = cumsum(p);
+n_state = length(cum_p);
+u_rnd = rand(1,n_t);
 for i = 1:n_t
-    u = rand;
-    inx = find((u-cum_p)<0,1,'first');
-    GU(i) = state(inx);
+    u = u_rnd(i);
+%     index = find((u-cum_p)<0,1,'first');
+    for j = 1:n_state
+        if u - cum_p(j) < 0
+            index = j;
+            break;
+        end
+    end
+    GU(i) = state(index);
 end
