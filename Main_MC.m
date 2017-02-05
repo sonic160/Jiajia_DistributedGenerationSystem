@@ -1,7 +1,7 @@
 % This is the main function of the MC for the distributed generated system.
 % Version history:
 % 20170123: Created by ZZ
-clear;clc;tic;
+clear; clc;tic;
 %% Data definitions
 % For the transformer
 lambda_T = 4e-3; % Failure rate for the transformer (y^{-1}), be careful, maybe Li and Zio (2012) made a mistake.
