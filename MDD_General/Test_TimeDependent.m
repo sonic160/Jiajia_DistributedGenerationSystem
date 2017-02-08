@@ -22,7 +22,7 @@ LOLE_UGF = 0;
 tic;
 for i = 1:T
     fprintf('%d/%d\n',i,T+1)
-    [temp_EENS,temp_LOLE] = UGF(p_T(i),p_S(i),p_W(i));
+    [temp_EENS,temp_LOLE] = DirectEnumeration(p_T(i),p_S(i),p_W(i));
     EENS_UGF = EENS_UGF + temp_EENS;
     LOLE_UGF = LOLE_UGF + temp_LOLE;
 end
