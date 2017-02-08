@@ -31,8 +31,8 @@ tic;
 EENS_MDD = 0;
 LOLE_MDD = 0;
 for i = 1:T
-    fprintf('%d/%d\n',i,T+1)
-    [temp_EENS,temp_LOLE] = MDD(p_T(i),p_S(i),p_W(i));
+    fprintf('%d/%d\n',i,T)
+    [temp_EENS,temp_LOLE] = MDD_DG(p_T(i),p_S(i),p_W(i));
     EENS_MDD = EENS_MDD + temp_EENS;
     LOLE_MDD = LOLE_MDD + temp_LOLE;
 end
