@@ -15,4 +15,5 @@ lambda_W = 5e-4; % Failure rate for the Wind Generator (h^{-1})
 mu_W = 1.3e-2; % Repair rate for the Wind Generator (h^{-1})
 p_steady_W = mu_W/(mu_W+lambda_W);
 %% Run simulation
-[EENS,LOLE] = MDD_DG(p_steady_T,p_steady_S,p_steady_W)
+[EENS_MDD,LOLE_MDD] = MDD_DG(p_steady_T,p_steady_S,p_steady_W)
+[EENS_UGF,LOLE_UGF] = UGF_DG(p_steady_T,p_steady_S,p_steady_W)

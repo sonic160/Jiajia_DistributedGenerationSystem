@@ -3,7 +3,7 @@ EENS = [0,0];
 LOLE = [0,0];
 v_th_margin = 0;
 v_group_margin = 0;
-v_th_EG = 5e-2;
+v_th_EG = 10;
 v_group_EG_L = 0;
 %% Data definitions
 % For the transformer
@@ -129,7 +129,7 @@ p = node_in.p;
 index = 0;
 I = zeros(node_out.n,1);
 for i = 1: node_in.n
-    if  p(i) - v_th_EG > 0
+    if  value(i)*p(i) - v_th_EG > 0
         continue;
     else
         index = index +1;
@@ -137,16 +137,10 @@ for i = 1: node_in.n
     end
 end
 I = I(1:index);
-value_group = max(value(I));
-% value_group = sum(value(I).*p(I))/sum(p(I));
+% value_group = max(value(I));
+value_group = sum(value(I).*p(I))/sum(p(I));
 value(I) = value_group;
 node_out.value = value;
-% Sort value_out in ascending order, and adjust p_out accordingly
-[value,I] = sort(value);
-p_out = p(I);
-% Record the output node
-node_out.value = value;
-node_out.p = p_out;
 end
 
 % handle_criterion: return 1, when we need to keep this branch
@@ -156,18 +150,13 @@ value = node_in.value;
 p = node_in.p;
 value_out = value;
 for i = 1: node_in.n
-    if p(i) - v_th > 0
+    if value(i)*p(i) - v_th > 0
         continue;
     else
         value_out(i) = value_group;
     end
 end
-% Sort value_out in ascending order, and adjust p_out accordingly
-[value_out,I] = sort(value_out);
-p_out = p(I);
-% Record the output node
 node_out.value = value_out;
-node_out.p = p_out;
 end
 
 % handle_criterion: return 1, when we need to keep this branch
@@ -175,7 +164,6 @@ function node_out = NodeJudgement_value(node_in,v_th,value_group)
 node_out = node_in;
 value = node_in.value;
 value_out = value;
-p_out = node_in.p;
 for i = 1: node_in.n
     if value(i) - v_th < 0
         continue;
@@ -183,11 +171,6 @@ for i = 1: node_in.n
         value_out(i) = value_group;
     end
 end
-% Sort value_out in ascending order, and adjust p_out accordingly
-[value_out,I] = sort(value_out);
-p_out = p_out(I);
-% Record the output node
 node_out.value = value_out;
-node_out.p = p_out;
 end
 
